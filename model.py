@@ -3,7 +3,11 @@ import pretrainedmodels
 import pretrainedmodels.utils
 
 
-def get_model(model_name="se_resnext50_32x4d", num_classes=101, pretrained="imagenet"):
+model_name_ = "se_resnext50_32x4d"
+# model_name_ = "se_resnext101_32x4d"
+
+
+def get_model(model_name, num_classes=101, pretrained="imagenet"):
     model = pretrainedmodels.__dict__[model_name](pretrained=pretrained)
     dim_feats = model.last_linear.in_features
     model.last_linear = nn.Linear(dim_feats, num_classes)
@@ -12,7 +16,7 @@ def get_model(model_name="se_resnext50_32x4d", num_classes=101, pretrained="imag
 
 
 def main():
-    model = get_model()
+    model = get_model(model_name_)
     print(model)
 
 
