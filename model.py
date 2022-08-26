@@ -2,9 +2,13 @@ import torch.nn as nn
 import pretrainedmodels
 import pretrainedmodels.utils
 
+import ssl
 
-model_name_ = "se_resnext50_32x4d"
-# model_name_ = "se_resnext101_32x4d"
+
+# model_name_ = "se_resnext50_32x4d"
+model_name_ = "se_resnext101_32x4d"
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 
 def get_model(model_name, num_classes=101, pretrained="imagenet"):

@@ -37,6 +37,8 @@ class FaceDataset(Dataset):
         assert(data_type in ("train", "valid", "test"))
         csv_path = Path(data_dir).joinpath(f"gt_avg_{data_type}.csv")
         img_dir = Path(data_dir).joinpath(data_type)
+        print(f'csv_path: {csv_path}')
+        print(f'img_dir: {img_dir}')
         self.img_size = img_size
         self.augment = augment
         self.age_stddev = age_stddev

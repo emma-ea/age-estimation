@@ -1,4 +1,6 @@
 data_dir/
 imgs/
 imgs_out/
+checkpoint/
 misc/epoch*
+tf_log*
