@@ -18,20 +18,20 @@ class Identity(nn.Module):
         return x
 
 
-class LeNet(nn.Module):
+class CusModel(nn.Module):
 
     def __init__(self, in_ch, out_ch):
-        super(LeNet, self).__init__()
+        super(CusModel, self).__init__()
 
-        self.conv1 = nn.Conv2d(in_ch, 512, kernel_size=(5, 5))
+        self.conv1 = nn.Conv2d(3, 20, kernel_size=(5, 5))
         self.relu1 = nn.ReLU()
         self.maxPool1 = nn.MaxPool2d(kernel_size=(2, 2), stride=(2, 2))
 
-        self.conv2 = nn.Conv2d(512, 1024, kernel_size=(5, 5))
+        self.conv2 = nn.Conv2d(20, 50, kernel_size=(5, 5))
         self.relu2 = nn.ReLU()
         self.maxPool2 = nn.MaxPool2d(kernel_size=(2, 2), stride=(2, 2))
 
-        self.lin1 = nn.Linear(800, 500)
+        self.lin1 = nn.Linear(in_ch, 500)
         self.relu3 = nn.ReLU()
 
         self.lin2 = nn.Linear(500, out_ch)
@@ -67,7 +67,7 @@ def get_model(model_name, num_classes=101, pretrained="imagenet"):
         param.requires_grad = False
 
     dim_feats = model.last_linear.in_features
-    # model.last_linear = LeNet(dim_feats, num_classes)
+    model.last_linear = CusModel(dim_feats, num_classes)
 
     model.last_linear = nn.Sequential(
         nn.Linear(dim_feats, 1024),
