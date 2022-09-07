@@ -135,6 +135,20 @@ def validate(validate_loader, model, criterion, epoch, device):
     return loss_monitor.avg, accuracy_monitor.avg, mae
 
 
+def model_to_drive(model_name):
+    # if "google.colab" in str(get_ipython()):
+    import os
+    if "COLAB" in os.environ:
+        import subprocess
+        src = f"./checkpoint/{model_name}"
+        dst = "/content/drive/MyDrive/age_esti_colab_session/"
+        cmd = ["cp", src, dst]
+        ret = subprocess.run(cmd)
+        if ret.returncode == 0:
+            return True
+    return False
+
+
 def main():
     args = get_args()
 
@@ -228,6 +242,14 @@ def main():
                 },
                 str(checkpoint_dir.joinpath("epoch{:03d}_{:.5f}_{:.4f}.pth".format(epoch, val_loss, val_mae)))
             )
+            # backup checkpoint
+            model_name = "epoch{:03d}_{:.5f}_{:.4f}.pth".format(epoch, val_loss, val_mae)
+            ret = model_to_drive(model_name)
+            if ret:
+                print("[model checkpoint] saved to drive")
+            else:
+                print("[model checkpoint] error copying to drive")
+
             best_val_mae = val_mae
         else:
             print(f"=> [epoch {epoch:03d}] best val mae was not improved from {best_val_mae:.3f} ({val_mae:.3f})")
