@@ -69,10 +69,10 @@ def get_model(model_name, num_classes=101, pretrained="imagenet"):
     dim_feats = model.last_linear.in_features
     model.last_linear = CusModel(dim_feats, num_classes)
 
-    model.last_linear = nn.Sequential(
-        nn.Linear(dim_feats, 1024),
-        nn.Linear(1024, num_classes)
-    )
+    # model.last_linear = nn.Sequential(
+    #     nn.Linear(dim_feats, 1024),
+    #     nn.Linear(1024, num_classes)
+    # )
     return model
 
 
